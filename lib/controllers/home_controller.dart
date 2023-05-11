@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class HomeController extends GetxController {
   var pageIndex = 0.obs;
   String spreadsheetId = "";
+  var cashflowType = "Income".obs;
   GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [
       "email",
