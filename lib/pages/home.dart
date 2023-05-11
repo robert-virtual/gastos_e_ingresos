@@ -18,26 +18,33 @@ class HomePage extends GetView<HomeController> {
         }
         if (controller.expensesAndIncomes != null) {
           return ListView.builder(
-              itemCount: controller.expensesAndIncomes!.length,
-              itemBuilder: (context, idx) {
-                List<dynamic> item = controller.expensesAndIncomes![idx];
-                return Card(
-                  child: ListTile(
-                    title: Text(item[0]),
-                    subtitle: Text(timeago.format(DateTime.parse(item[3]))),
-                    trailing: Text(
-                      "L.${item[2]}",
-                      style: TextStyle(
-                          color: item[1] == "expense"
-                              ? const Color(0xFFe74c3c)
-                              : const Color(0xFF27ae60)),
-                    ),
+            itemCount: controller.expensesAndIncomes!.length,
+            itemBuilder: (context, idx) {
+              List<dynamic> item = controller.expensesAndIncomes![idx];
+              return Card(
+                child: ListTile(
+                  title: Text(item[0]),
+                  subtitle: Text(timeago.format(DateTime.parse(item[3]))),
+                  trailing: Text(
+                    "L.${item[2]}",
+                    style: TextStyle(
+                        color: item[1] == "expense"
+                            ? const Color(0xFFe74c3c)
+                            : const Color(0xFF27ae60)),
                   ),
-                );
-              });
+                ),
+              );
+            },
+          );
         }
         return const Center(child: CircularProgressIndicator());
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed("/create-expense-income");
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

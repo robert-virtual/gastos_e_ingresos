@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gastos_e_ingresos/pages/account.dart';
+import 'package:gastos_e_ingresos/pages/create_expense_income.dart';
 import 'package:get/get.dart';
 
 import 'controllers/home_binding.dart';
@@ -32,6 +33,11 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/account',
           page: () => const AccountPage(),
+          binding: HomeBinding(),
+        ),
+        GetPage(
+          name: '/create-expense-income',
+          page: () => const CreateExpenseIncomePage(),
           binding: HomeBinding(),
         )
       ],
