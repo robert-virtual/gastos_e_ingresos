@@ -18,13 +18,15 @@ class NavPage extends GetView<HomeController> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           currentIndex: controller.pageIndex.value,
           onTap: (index) {
             controller.pageIndex.value = index;
           },
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.money_off),
+              icon: Icon(Icons.attach_money),
               label: 'Home',
             ),
             BottomNavigationBarItem(

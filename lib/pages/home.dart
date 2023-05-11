@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/home_controller.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -23,7 +24,7 @@ class HomePage extends GetView<HomeController> {
                 return Card(
                   child: ListTile(
                     title: Text(item[0]),
-                    subtitle: Text(item[3]),
+                    subtitle: Text(timeago.format(DateTime.parse(item[3]))),
                     trailing: Text(
                       "L.${item[2]}",
                       style: TextStyle(
