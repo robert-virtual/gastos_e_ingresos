@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gastos_e_ingresos/pages/account.dart';
 import 'package:get/get.dart';
 
 import 'controllers/home_binding.dart';
+import 'pages/nav.dart';
 import 'pages/home.dart';
-import 'pages/expenses.dart';
-import 'pages/incomes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,21 +17,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/nav',
       getPages: [
+        GetPage(
+          name: '/nav',
+          page: () => const NavPage(),
+          binding: HomeBinding(),
+        ),
         GetPage(
           name: '/home',
           page: () => const HomePage(),
           binding: HomeBinding(),
         ),
         GetPage(
-          name: '/income',
-          page: () => const IncomePage(),
-          binding: HomeBinding(),
-        ),
-        GetPage(
-          name: '/expense',
-          page: () => const ExpensesPage(),
+          name: '/account',
+          page: () => const AccountPage(),
           binding: HomeBinding(),
         )
       ],

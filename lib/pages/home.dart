@@ -8,21 +8,35 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        children: controller.pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.money_off),
-            label: 'expenses',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.attach_money_outlined),
-            label: 'income',
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("Gastos & Ingresos")),
+      body: GetBuilder<HomeController>(builder: (_) {
+        if (controller.error != null) {
+          return const Center(
+            child: Text("Ups something went wrong. Try again"),
+          );
+        }
+        if (controller.expensesAndIncomes != null) {
+          return ListView.builder(
+              itemCount: controller.expensesAndIncomes!.length,
+              itemBuilder: (context, idx) {
+                List<dynamic> item = controller.expensesAndIncomes![idx];
+                return Card(
+                  child: ListTile(
+                    title: Text(item[0]),
+                    subtitle: Text(item[3]),
+                    trailing: Text(
+                      "L.${item[2]}",
+                      style: TextStyle(
+                          color: item[1] == "expense"
+                              ? const Color(0xFFe74c3c)
+                              : const Color(0xFF27ae60)),
+                    ),
+                  ),
+                );
+              });
+        }
+        return const Center(child: CircularProgressIndicator());
+      }),
     );
   }
 }
