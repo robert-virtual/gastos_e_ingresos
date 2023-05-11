@@ -8,18 +8,8 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: InkWell(
-        onTap: () {
-          controller.count++;
-        },
-        child: Center(
-          child: Column(
-            children: [
-              const Text("Home"),
-              Text("Count: ${controller.count}"),
-            ],
-          ),
-        ),
+      body: IndexedStack(
+        children: controller.pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -29,7 +19,7 @@ class HomePage extends GetView<HomeController> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money_outlined),
-            label: 'expenses',
+            label: 'income',
           ),
         ],
       ),
