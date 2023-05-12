@@ -17,24 +17,86 @@ class HomePage extends GetView<HomeController> {
           );
         }
         if (controller.expensesAndIncomes != null) {
-          return ListView.builder(
-            itemCount: controller.expensesAndIncomes!.length,
-            itemBuilder: (context, idx) {
-              List<dynamic> item = controller.expensesAndIncomes![idx];
-              return Card(
-                child: ListTile(
-                  title: Text(item[0]),
-                  subtitle: Text(timeago.format(DateTime.parse(item[3]))),
-                  trailing: Text(
-                    "L.${item[2]}",
-                    style: TextStyle(
-                        color: item[1] == "expense"
-                            ? const Color(0xFFe74c3c)
-                            : const Color(0xFF27ae60)),
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                elevation: 0,
+                primary: false,
+                automaticallyImplyLeading: false,
+                title: Text("${controller.expensesAndIncomes!.length} items"),
+                actions: [
+                  Wrap(
+                    spacing: 2.0,
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: controller.timeFilter,
+                          items: const [
+                            DropdownMenuItem(
+                              value: "all",
+                              child: Text("All"),
+                            ),
+                            DropdownMenuItem(
+                              value: "this_month",
+                              child: Text("This month"),
+                            ),
+                            DropdownMenuItem(
+                              value: "this_week",
+                              child: Text("This week"),
+                            )
+                          ],
+                          onChanged: (value) {
+                            if (value != null) controller.setTimeFilter(value);
+                          },
+                        ),
+                      ),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: controller.typeFilter,
+                          items: const [
+                            DropdownMenuItem(
+                              value: "all",
+                              child: Text("All"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Expense",
+                              child: Text("Expense"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Income",
+                              child: Text("Income"),
+                            )
+                          ],
+                          onChanged: (value) {
+                            if (value != null) controller.setTypeFilter(value);
+                          },
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      childCount: controller.expensesAndIncomes!.length,
+                      (context, idx) {
+                List<dynamic> item = controller.expensesAndIncomes![idx];
+                return Card(
+                  child: ListTile(
+                    title: Text(item[0]),
+                    subtitle: Text(timeago.format(DateTime.parse(item[3]))),
+                    trailing: Text(
+                      "L.${item[2]}",
+                      style: TextStyle(
+                          color: item[1] == "Expense"
+                              ? const Color(0xFFe74c3c)
+                              : const Color(0xFF27ae60)),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              }))
+            ],
           );
         }
         return const Center(child: CircularProgressIndicator());

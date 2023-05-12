@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,7 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class HomeController extends GetxController {
   var pageIndex = 0.obs;
   String spreadsheetId = "";
-  var cashflowType = "Income".obs;
+  bool loading = false;
+  String cashflowType = "Income";
   GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: [
       "email",
@@ -16,6 +18,9 @@ class HomeController extends GetxController {
     ],
   );
   GoogleSignInAccount? user;
+
+  String timeFilter = "all";
+  String typeFilter = "all";
   signIn() async {
     user = await googleSignIn.signIn();
     update();
@@ -86,6 +91,7 @@ class HomeController extends GetxController {
   }
 
   List<dynamic>? expensesAndIncomes;
+  List<dynamic>? expensesAndIncomesCopy;
   String? error;
   Future<void> getExpensesAndIncomes() async {
     final http.Response response = await http.get(
@@ -101,7 +107,58 @@ class HomeController extends GetxController {
     final Map<String, dynamic> data =
         jsonDecode(response.body) as Map<String, dynamic>;
     print(response.body);
-    expensesAndIncomes = data["values"];
+    expensesAndIncomes = (data["values"] as List<dynamic>).reversed.toList();
+    expensesAndIncomesCopy =
+        (data["values"] as List<dynamic>).reversed.toList();
+    update();
+  }
+
+  Future<void> saveCashFlow(List<dynamic> dataToInsert) async {
+    final http.Response response = await http.post(
+        Uri.parse(
+            "https://sheets.googleapis.com/v4/spreadsheets/$spreadsheetId/values/A:D:append?valueInputOption=RAW"),
+        headers: await user!.authHeaders,
+        body: jsonEncode({
+          "values": [dataToInsert]
+        }));
+    if (response.statusCode != 200) {
+      print(response.body);
+      return;
+    }
+  }
+
+  void setCashflowType(String value) {
+    cashflowType = value;
+    update();
+  }
+
+  void setloading(bool value) {
+    loading = value;
+    update();
+  }
+
+  void setTypeFilter(String value) {
+    typeFilter = value;
+    if (typeFilter == "all") {
+      expensesAndIncomes = expensesAndIncomesCopy;
+    } else {
+      expensesAndIncomes = expensesAndIncomesCopy!
+          .where((element) => element[1] == typeFilter)
+          .toList();
+    }
+    update();
+  }
+
+  void setTimeFilter(String value) {
+    timeFilter = value;
+    if (timeFilter == "all") {
+      expensesAndIncomes = expensesAndIncomesCopy;
+    } else {
+      // TODO: convert string date to datetime and filter by week or month
+      // expensesAndIncomes = expensesAndIncomesCopy!
+      //     .where((element) => element[3] == timeFilter)
+      //     .toList();
+    }
     update();
   }
 }
