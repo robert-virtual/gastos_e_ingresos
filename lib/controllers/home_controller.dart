@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -52,21 +51,18 @@ class HomeController extends GetxController {
       headers: await user!.authHeaders,
     );
     if (response.statusCode != 200) {
-      print(response.body);
       return;
     }
     final Map<String, dynamic> data =
         jsonDecode(response.body) as Map<String, dynamic>;
     List<dynamic> files = (data["files"] as List<dynamic>);
     if (files.isEmpty) {
-      print("no spreadsheet with that name found");
       // create that file which will be our database
       createSpreadSheet();
       return;
     }
     Map<String, dynamic> file = files[0];
     spreadsheetId = file["id"];
-    print("spreadsheetId = $spreadsheetId");
   }
 
   void createSpreadSheet() async {
@@ -82,7 +78,6 @@ class HomeController extends GetxController {
           ]
         }));
     if (response.statusCode != 200) {
-      print(response.body);
       return;
     }
     Map<String, dynamic> data = jsonDecode(response.body);
@@ -100,13 +95,11 @@ class HomeController extends GetxController {
       headers: await user!.authHeaders,
     );
     if (response.statusCode != 200) {
-      print(response.body);
       error = "${response.statusCode}";
       update();
     }
     final Map<String, dynamic> data =
         jsonDecode(response.body) as Map<String, dynamic>;
-    print(response.body);
     expensesAndIncomes = (data["values"] as List<dynamic>);
     expensesAndIncomes!
         .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
@@ -123,7 +116,6 @@ class HomeController extends GetxController {
           "values": [dataToInsert]
         }));
     if (response.statusCode != 200) {
-      print(response.body);
       return;
     }
   }
