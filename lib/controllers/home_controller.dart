@@ -151,13 +151,22 @@ class HomeController extends GetxController {
 
   void setTimeFilter(String value) {
     timeFilter = value;
-    if (timeFilter == "all") {
-      expensesAndIncomes = expensesAndIncomesCopy;
-    } else {
-      // TODO: convert string date to datetime and filter by week or month
-      // expensesAndIncomes = expensesAndIncomesCopy!
-      //     .where((element) => element[3] == timeFilter)
-      //     .toList();
+
+    switch (timeFilter) {
+      case "this_week":
+        expensesAndIncomes = expensesAndIncomesCopy!
+            .where((element) => DateTime.parse(element[3])
+                .isAfter(DateTime.now().subtract(const Duration(days: 7))))
+            .toList();
+        break;
+      case "this_month":
+        expensesAndIncomes = expensesAndIncomesCopy!
+            .where((element) => DateTime.parse(element[3])
+                .isAfter(DateTime.now().subtract(const Duration(days: 30))))
+            .toList();
+        break;
+      default:
+        expensesAndIncomes = expensesAndIncomesCopy;
     }
     update();
   }
