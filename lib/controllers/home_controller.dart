@@ -107,9 +107,10 @@ class HomeController extends GetxController {
     final Map<String, dynamic> data =
         jsonDecode(response.body) as Map<String, dynamic>;
     print(response.body);
-    expensesAndIncomes = (data["values"] as List<dynamic>).reversed.toList();
-    expensesAndIncomesCopy =
-        (data["values"] as List<dynamic>).reversed.toList();
+    expensesAndIncomes = (data["values"] as List<dynamic>);
+    expensesAndIncomes!
+        .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
+    expensesAndIncomesCopy = expensesAndIncomes;
     update();
   }
 
