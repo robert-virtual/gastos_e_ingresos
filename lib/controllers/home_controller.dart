@@ -82,7 +82,6 @@ class HomeController extends GetxController {
     }
     Map<String, dynamic> data = jsonDecode(response.body);
     spreadsheetId = data["spreadsheetId"];
-    print("spreadsheetId = $spreadsheetId");
   }
 
   List<dynamic>? expensesAndIncomes;
@@ -98,12 +97,18 @@ class HomeController extends GetxController {
       error = "${response.statusCode}";
       update();
     }
+    print(response.body);
     final Map<String, dynamic> data =
         jsonDecode(response.body) as Map<String, dynamic>;
-    expensesAndIncomes = (data["values"] as List<dynamic>);
-    expensesAndIncomes!
-        .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
-    expensesAndIncomesCopy = expensesAndIncomes;
+    if (data.containsKey("values")) {
+      expensesAndIncomes = (data["values"] as List<dynamic>);
+      expensesAndIncomes!
+          .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
+      expensesAndIncomesCopy = expensesAndIncomes;
+    } else {
+      expensesAndIncomes = List.empty();
+      expensesAndIncomesCopy = List.empty();
+    }
     update();
   }
 
@@ -140,6 +145,11 @@ class HomeController extends GetxController {
           .toList();
     }
     update();
+  }
+
+  Future<void> signOut() async {
+    spreadsheetId = "";
+    await googleSignIn.disconnect();
   }
 
   void setTimeFilter(String value) {

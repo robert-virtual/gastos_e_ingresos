@@ -11,9 +11,48 @@ class HomePage extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(title: const Text("Gastos & Ingresos")),
       body: GetBuilder<HomeController>(builder: (_) {
+        if (controller.user == null) {
+          return Center(
+            child: InkWell(
+              child: Container(
+                color: Colors.blue,
+                padding: const EdgeInsets.all(2.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/google.jpg',
+                        width: 40,
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      const Text(
+                        "Iniciar sesion con Google",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ]),
+              ),
+              onTap: () async {
+                await controller.signIn();
+              },
+            ),
+          );
+        }
         if (controller.error != null) {
           return const Center(
-            child: Text("Ups something went wrong. Try again"),
+            child: Text("Ups algo salio mal. Vuelve a Intentar mas tarde"),
+          );
+        }
+        if (controller.expensesAndIncomes != null &&
+            controller.expensesAndIncomes!.isEmpty) {
+          return const Center(
+            child: Text("Agrega un nuevo ingreso/gasto"),
           );
         }
         if (controller.expensesAndIncomes != null) {
@@ -35,15 +74,15 @@ class HomePage extends GetView<HomeController> {
                           items: const [
                             DropdownMenuItem(
                               value: "all",
-                              child: Text("All"),
+                              child: Text("Todo"),
                             ),
                             DropdownMenuItem(
                               value: "this_month",
-                              child: Text("This month"),
+                              child: Text("Este Mes"),
                             ),
                             DropdownMenuItem(
                               value: "this_week",
-                              child: Text("This week"),
+                              child: Text("Esta Semana"),
                             )
                           ],
                           onChanged: (value) {
@@ -57,15 +96,15 @@ class HomePage extends GetView<HomeController> {
                           items: const [
                             DropdownMenuItem(
                               value: "all",
-                              child: Text("All"),
+                              child: Text("Todo"),
                             ),
                             DropdownMenuItem(
                               value: "Expense",
-                              child: Text("Expense"),
+                              child: Text("Gasto"),
                             ),
                             DropdownMenuItem(
                               value: "Income",
-                              child: Text("Income"),
+                              child: Text("Ingreso"),
                             )
                           ],
                           onChanged: (value) {

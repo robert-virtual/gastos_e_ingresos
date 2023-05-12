@@ -22,22 +22,27 @@ class CreateExpenseIncomePage extends GetView<HomeController> {
                 children: [
                   TextFormField(
                     controller: titleCtrl,
-                    decoration: const InputDecoration(label: Text("Title")),
+                    decoration: const InputDecoration(
+                        label: Text("Gasto/Ingreso"), helperText: "Ej: Caffe"),
                   ),
                   TextFormField(
                     controller: moneyCtrl,
-                    decoration: const InputDecoration(label: Text("Money")),
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      label: Text("Monto"),
+                      helperText: "Ej: 35",
+                    ),
                   ),
                   DropdownButton<String>(
                       value: controller.cashflowType,
                       items: const [
                         DropdownMenuItem(
                           value: "Expense",
-                          child: Text("Expense"),
+                          child: Text("Gasto"),
                         ),
                         DropdownMenuItem(
                           value: "Income",
-                          child: Text("Income"),
+                          child: Text("Ingreso"),
                         )
                       ],
                       onChanged: (value) {
