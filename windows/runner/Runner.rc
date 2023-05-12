@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "gastos_e_ingresos" "\0"
+            VALUE "FileDescription", "Ingresos Y Gastos" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "gastos_e_ingresos" "\0"
+            VALUE "InternalName", "Ingresos Y Gastos" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "gastos_e_ingresos.exe" "\0"
-            VALUE "ProductName", "gastos_e_ingresos" "\0"
+            VALUE "ProductName", "Ingresos Y Gastos" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
