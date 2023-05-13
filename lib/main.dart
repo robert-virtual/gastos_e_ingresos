@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gastos_e_ingresos/pages/account.dart';
 import 'package:gastos_e_ingresos/pages/create_expense_income.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'controllers/home_binding.dart';
 import 'pages/nav.dart';
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       initialRoute: '/nav',
       getPages: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/widgets.dart';
 import '../controllers/home_controller.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class AccountPage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Cuenta")),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.cap_account)),
       body: GetBuilder<HomeController>(
         builder: (_) => controller.user != null
             ? Column(
@@ -37,9 +38,9 @@ class AccountPage extends GetView<HomeController> {
                             const SizedBox(
                               width: 25,
                             ),
-                            const Text(
-                              "Cerrar Sesion",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.signOut,
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -70,9 +71,9 @@ class AccountPage extends GetView<HomeController> {
                           const SizedBox(
                             width: 25,
                           ),
-                          const Text(
-                            "Iniciar sesion con Google",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.signInWithGoogle,
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),

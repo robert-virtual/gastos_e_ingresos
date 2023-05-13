@@ -3,6 +3,7 @@ import 'package:gastos_e_ingresos/pages/account.dart';
 import 'package:gastos_e_ingresos/pages/home.dart';
 import '../controllers/home_controller.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavPage extends GetView<HomeController> {
   const NavPage({super.key});
@@ -24,14 +25,14 @@ class NavPage extends GetView<HomeController> {
           onTap: (index) {
             controller.pageIndex.value = index;
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money),
-              label: 'Home',
+              icon: const Icon(Icons.attach_money),
+              label: AppLocalizations.of(context)!.cap_home,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Account',
+              icon: const Icon(Icons.person),
+              label: AppLocalizations.of(context)!.cap_account,
             ),
           ],
         ),

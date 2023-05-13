@@ -1,0 +1,17 @@
+{
+  "cap_home": "Home",
+  "cap_account": "Account",
+  "expensesAndIncome":"Expenses & Income",
+  "signInWithGoogle":"Sign in with Google",
+  "somethingWentWrong":"Ups something went wrong. Try again later",
+  "cap_all":"All",
+  "this_month":"This Month",
+  "this_week":"This Week",
+  "cap_expense":"Expense",
+  "cap_income":"Income",
+  "signOut":"Sign Out",
+  "expenseSlashIncome":"Expense/Income",
+  "example_coffe":"Ex: Coffee",
+  "cap_amount":"Amount",
+  "example_35":"Ex: 35"
+}

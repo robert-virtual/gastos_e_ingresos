@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +12,8 @@ class CreateExpenseIncomePage extends GetView<HomeController> {
     TextEditingController titleCtrl = TextEditingController();
     TextEditingController moneyCtrl = TextEditingController();
     return Scaffold(
-      appBar: AppBar(title: const Text("Gastos & Ingresos")),
+      appBar:
+          AppBar(title: Text(AppLocalizations.of(context)!.expensesAndIncome)),
       body: GetBuilder<HomeController>(
         builder: (_) => controller.loading
             ? const Center(
@@ -22,27 +24,31 @@ class CreateExpenseIncomePage extends GetView<HomeController> {
                 children: [
                   TextFormField(
                     controller: titleCtrl,
-                    decoration: const InputDecoration(
-                        label: Text("Gasto/Ingreso"), helperText: "Ej: Caffe"),
+                    decoration: InputDecoration(
+                        label: Text(
+                            AppLocalizations.of(context)!.expenseSlashIncome),
+                        helperText:
+                            AppLocalizations.of(context)!.example_coffe),
                   ),
                   TextFormField(
                     controller: moneyCtrl,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      label: Text("Monto"),
-                      helperText: "Ej: 35",
+                    decoration: InputDecoration(
+                      label: Text(AppLocalizations.of(context)!.cap_amount),
+                      helperText: AppLocalizations.of(context)!.example_35,
                     ),
                   ),
                   DropdownButton<String>(
                       value: controller.cashflowType,
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: "Expense",
-                          child: Text("Gasto"),
+                          child:
+                              Text(AppLocalizations.of(context)!.cap_expense),
                         ),
                         DropdownMenuItem(
                           value: "Income",
-                          child: Text("Ingreso"),
+                          child: Text(AppLocalizations.of(context)!.cap_income),
                         )
                       ],
                       onChanged: (value) {

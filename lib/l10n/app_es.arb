@@ -1,0 +1,17 @@
+{
+  "cap_home": "Inicio",
+  "cap_account": "Cuenta",
+  "expensesAndIncome":"Gastos & Ingresos",
+  "signInWithGoogle":"Iniciar sesion con Google",
+  "somethingWentWrong":"Ups algo salio mal. Vuelve a Intentar mas tarde",
+  "cap_all":"Todo",
+  "this_month":"Este Mes",
+  "this_week":"Esta Semana",
+  "cap_expense":"Gasto",
+  "cap_income":"Ingreso",
+  "signOut":"Cerrar Sesion",
+  "expenseSlashIncome":"Gasto/Ingreso",
+  "example_coffe":"Ej: Cafe",
+  "cap_amount":"Monto",
+  "example_35":"Ej: 35"
+}

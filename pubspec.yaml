@@ -37,8 +37,10 @@ dependencies:
   get: ^4.6.5
   google_sign_in: ^6.1.0
   http: ^0.13.6
-  timeago: ^3.4.0
-  intl: ^0.18.1
+  timeago: any
+  intl: any
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +68,7 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  generate: true
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

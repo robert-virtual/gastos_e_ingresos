@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -9,7 +10,8 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Gastos & Ingresos")),
+      appBar:
+          AppBar(title: Text(AppLocalizations.of(context)!.expensesAndIncome)),
       body: GetBuilder<HomeController>(builder: (_) {
         if (controller.user == null) {
           return Center(
@@ -28,9 +30,9 @@ class HomePage extends GetView<HomeController> {
                       const SizedBox(
                         width: 25,
                       ),
-                      const Text(
-                        "Iniciar sesion con Google",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.signInWithGoogle,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
@@ -45,8 +47,8 @@ class HomePage extends GetView<HomeController> {
           );
         }
         if (controller.error != null) {
-          return const Center(
-            child: Text("Ups algo salio mal. Vuelve a Intentar mas tarde"),
+          return Center(
+            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
           );
         }
         if (controller.expensesAndIncomes != null &&
@@ -71,18 +73,21 @@ class HomePage extends GetView<HomeController> {
                       DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: controller.timeFilter,
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: "all",
-                              child: Text("Todo"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.cap_all),
                             ),
                             DropdownMenuItem(
                               value: "this_month",
-                              child: Text("Este Mes"),
+                              child: Text(
+                                  AppLocalizations.of(context)!.this_month),
                             ),
                             DropdownMenuItem(
                               value: "this_week",
-                              child: Text("Esta Semana"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.this_week),
                             )
                           ],
                           onChanged: (value) {
@@ -93,18 +98,21 @@ class HomePage extends GetView<HomeController> {
                       DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: controller.typeFilter,
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: "all",
-                              child: Text("Todo"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.cap_all),
                             ),
                             DropdownMenuItem(
                               value: "Expense",
-                              child: Text("Gasto"),
+                              child: Text(
+                                  AppLocalizations.of(context)!.cap_expense),
                             ),
                             DropdownMenuItem(
                               value: "Income",
-                              child: Text("Ingreso"),
+                              child: Text(
+                                  AppLocalizations.of(context)!.cap_income),
                             )
                           ],
                           onChanged: (value) {
