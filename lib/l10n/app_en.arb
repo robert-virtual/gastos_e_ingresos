@@ -13,5 +13,7 @@
   "expenseSlashIncome":"Expense/Income",
   "example_coffe":"Ex: Coffee",
   "cap_amount":"Amount",
-  "example_35":"Ex: 35"
+  "example_35":"Ex: 35",
+  "addNewExpenseSlashIncome":"New Income/Expense",
+  "cap_balance":"Balance"
 }

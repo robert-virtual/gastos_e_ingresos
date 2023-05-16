@@ -20,25 +20,28 @@ class HomePage extends GetView<HomeController> {
                 color: Colors.blue,
                 padding: const EdgeInsets.all(2.0),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/google.jpg',
-                        width: 40,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/google.jpg',
+                      width: 40,
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.signInWithGoogle,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(
-                        width: 25,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.signInWithGoogle,
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ]),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
               ),
               onTap: () async {
                 await controller.signIn();
@@ -48,13 +51,13 @@ class HomePage extends GetView<HomeController> {
         }
         if (controller.error != null) {
           return Center(
-            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
+            child: Text(AppLocalizations.of(context)!.addNewExpenseSlashIncome),
           );
         }
         if (controller.expensesAndIncomes != null &&
             controller.expensesAndIncomes!.isEmpty) {
-          return const Center(
-            child: Text("Agrega un nuevo ingreso/gasto"),
+          return Center(
+            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
           );
         }
         if (controller.expensesAndIncomes != null) {
@@ -65,7 +68,6 @@ class HomePage extends GetView<HomeController> {
                 elevation: 0,
                 primary: false,
                 automaticallyImplyLeading: false,
-                title: Text("${controller.expensesAndIncomes!.length} items"),
                 actions: [
                   Wrap(
                     spacing: 2.0,
@@ -125,24 +127,58 @@ class HomePage extends GetView<HomeController> {
                 ],
               ),
               SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      childCount: controller.expensesAndIncomes!.length,
-                      (context, idx) {
-                List<dynamic> item = controller.expensesAndIncomes![idx];
-                return Card(
-                  child: ListTile(
-                    title: Text(item[0]),
-                    subtitle: Text(timeago.format(DateTime.parse(item[3]))),
-                    trailing: Text(
-                      "L.${item[2]}",
-                      style: TextStyle(
-                          color: item[1] == "Expense"
-                              ? const Color(0xFFe74c3c)
-                              : const Color(0xFF27ae60)),
+                delegate: SliverChildListDelegate(
+                  [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${AppLocalizations.of(context)!.cap_balance}: ",
+                          style: const TextStyle(
+                            fontSize: 30.0,
+                          ),
+                        ),
+                        Text(
+                          "${controller.getBalance()}",
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              color: controller.getBalance() < 0
+                                  ? Colors.red
+                                  : Colors.green),
+                        ),
+                      ],
                     ),
-                  ),
-                );
-              }))
+                  ],
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: controller.expensesAndIncomes!.length,
+                  (context, idx) {
+                    List<dynamic> item = controller.expensesAndIncomes![idx];
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          item[0],
+                        ),
+                        subtitle: Text(
+                          timeago.format(
+                            DateTime.parse(item[3]),
+                          ),
+                        ),
+                        trailing: Text(
+                          "L.${item[2]}",
+                          style: TextStyle(
+                            color: item[1] == "Expense"
+                                ? const Color(0xFFe74c3c)
+                                : const Color(0xFF27ae60),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
             ],
           );
         }

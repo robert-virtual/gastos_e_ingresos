@@ -13,5 +13,7 @@
   "expenseSlashIncome":"Gasto/Ingreso",
   "example_coffe":"Ej: Cafe",
   "cap_amount":"Monto",
-  "example_35":"Ej: 35"
+  "example_35":"Ej: 35",
+  "addNewExpenseSlashIncome":"Agrega un nuevo ingreso/gasto",
+  "cap_balance":"Balance"
 }

@@ -65,6 +65,14 @@ class HomeController extends GetxController {
     spreadsheetId = file["id"];
   }
 
+  double getBalance() {
+    return expensesAndIncomes != null
+        ? expensesAndIncomes!
+            .map((e) => double.parse(e[2]))
+            .reduce((prev, current) => prev + current)
+        : 0;
+  }
+
   Future<void> createSpreadSheet() async {
     final http.Response response = await http.post(
         Uri.parse("https://sheets.googleapis.com/v4/spreadsheets"),
