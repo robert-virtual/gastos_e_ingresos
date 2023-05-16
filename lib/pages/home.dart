@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -9,6 +10,7 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final formater = NumberFormat("#,##0.00", "en_HN");
     return Scaffold(
       appBar:
           AppBar(title: Text(AppLocalizations.of(context)!.expensesAndIncome)),
@@ -139,7 +141,7 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ),
                         Text(
-                          "${controller.getBalance()}",
+                          formater.format(controller.getBalance()),
                           style: TextStyle(
                               fontSize: 30.0,
                               color: controller.getBalance() < 0
@@ -167,7 +169,7 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ),
                         trailing: Text(
-                          "L.${item[2]}",
+                          "L.${formater.format(double.parse(item[2]))}",
                           style: TextStyle(
                             color: item[1] == "Expense"
                                 ? const Color(0xFFe74c3c)
