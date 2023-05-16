@@ -7,10 +7,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final formater = NumberFormat("#,##0.00", "en_HN");
+    final locale = Localizations.localeOf(context);
+    final formater = NumberFormat("#,##0.00", locale.toString());
     return Scaffold(
       appBar:
           AppBar(title: Text(AppLocalizations.of(context)!.expensesAndIncome)),
@@ -141,7 +141,7 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ),
                         Text(
-                          formater.format(controller.getBalance()),
+                          "${formater.currencySymbol}. ${formater.format(controller.getBalance())}",
                           style: TextStyle(
                               fontSize: 30.0,
                               color: controller.getBalance() < 0
@@ -164,12 +164,11 @@ class HomePage extends GetView<HomeController> {
                           item[0],
                         ),
                         subtitle: Text(
-                          timeago.format(
-                            DateTime.parse(item[3]),
-                          ),
+                          timeago.format(DateTime.parse(item[3]),
+                              locale: locale.toString()),
                         ),
                         trailing: Text(
-                          "L.${formater.format(double.parse(item[2]))}",
+                          "${formater.currencySymbol}. ${formater.format(double.parse(item[2]))}",
                           style: TextStyle(
                             color: item[1] == "Expense"
                                 ? const Color(0xFFe74c3c)
