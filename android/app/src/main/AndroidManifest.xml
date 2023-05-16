@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gastos_e_ingresos">
+    package="gastos_e_ingresos.io.github.robert_virtual">
    <application
         android:label="Ingresos Y Gastos"
         android:name="${applicationName}"
@@ -31,4 +31,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+<uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
