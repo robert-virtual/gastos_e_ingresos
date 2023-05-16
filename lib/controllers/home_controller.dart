@@ -58,14 +58,14 @@ class HomeController extends GetxController {
     List<dynamic> files = (data["files"] as List<dynamic>);
     if (files.isEmpty) {
       // create that file which will be our database
-      createSpreadSheet();
+      await createSpreadSheet();
       return;
     }
     Map<String, dynamic> file = files[0];
     spreadsheetId = file["id"];
   }
 
-  void createSpreadSheet() async {
+  Future<void> createSpreadSheet() async {
     final http.Response response = await http.post(
         Uri.parse("https://sheets.googleapis.com/v4/spreadsheets"),
         headers: await user!.authHeaders,
