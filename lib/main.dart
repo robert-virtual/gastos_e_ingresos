@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       initialRoute: '/nav',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      darkTheme: ThemeData.dark(),
       getPages: [
         GetPage(
           name: '/nav',
