@@ -53,13 +53,13 @@ class HomePage extends GetView<HomeController> {
         }
         if (controller.error != null) {
           return Center(
-            child: Text(AppLocalizations.of(context)!.addNewExpenseSlashIncome),
+            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
           );
         }
         if (controller.expensesAndIncomes != null &&
             controller.expensesAndIncomes!.isEmpty) {
           return Center(
-            child: Text(AppLocalizations.of(context)!.somethingWentWrong),
+            child: Text(AppLocalizations.of(context)!.addNewExpenseSlashIncome),
           );
         }
         if (controller.expensesAndIncomes != null) {
@@ -69,6 +69,7 @@ class HomePage extends GetView<HomeController> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 primary: false,
+                pinned: true,
                 automaticallyImplyLeading: false,
                 actions: [
                   Wrap(

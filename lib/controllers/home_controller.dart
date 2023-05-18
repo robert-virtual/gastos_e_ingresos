@@ -114,6 +114,7 @@ class HomeController extends GetxController {
           .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
       expensesAndIncomesCopy = expensesAndIncomes;
     } else {
+      print("empty");
       expensesAndIncomes = List.empty();
       expensesAndIncomesCopy = List.empty();
     }
