@@ -56,12 +56,6 @@ class HomePage extends GetView<HomeController> {
             child: Text(AppLocalizations.of(context)!.somethingWentWrong),
           );
         }
-        if (controller.expensesAndIncomes != null &&
-            controller.expensesAndIncomes!.isEmpty) {
-          return Center(
-            child: Text(AppLocalizations.of(context)!.addNewExpenseSlashIncome),
-          );
-        }
         if (controller.expensesAndIncomes != null) {
           return CustomScrollView(
             slivers: [
@@ -85,6 +79,11 @@ class HomePage extends GetView<HomeController> {
                                   Text(AppLocalizations.of(context)!.cap_all),
                             ),
                             DropdownMenuItem(
+                              value: "today",
+                              child:
+                                  Text(AppLocalizations.of(context)!.cap_today),
+                            ),
+                            DropdownMenuItem(
                               value: "this_month",
                               child: Text(
                                   AppLocalizations.of(context)!.this_month),
@@ -96,7 +95,9 @@ class HomePage extends GetView<HomeController> {
                             )
                           ],
                           onChanged: (value) {
-                            if (value != null) controller.setTimeFilter(value);
+                            if (value != null) {
+                              controller.setFilters(time: value);
+                            }
                           },
                         ),
                       ),
@@ -121,7 +122,9 @@ class HomePage extends GetView<HomeController> {
                             )
                           ],
                           onChanged: (value) {
-                            if (value != null) controller.setTypeFilter(value);
+                            if (value != null) {
+                              controller.setFilters(type: value);
+                            }
                           },
                         ),
                       )
@@ -154,43 +157,63 @@ class HomePage extends GetView<HomeController> {
                   ],
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: controller.expensesAndIncomes!.length,
-                  (context, idx) {
-                    List<dynamic> item = controller.expensesAndIncomes![idx];
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          item[0],
-                        ),
-                        subtitle: Text(
-                          timeago.format(DateTime.parse(item[3]),
-                              locale: locale.toString()),
-                        ),
-                        trailing: Text(
-                          "${formater.currencySymbol}. ${formater.format(double.parse(item[2]))}",
-                          style: TextStyle(
-                            color: item[1] == "Expense"
-                                ? const Color(0xFFe74c3c)
-                                : const Color(0xFF27ae60),
-                          ),
-                        ),
+              controller.expensesAndIncomes!.isNotEmpty
+                  ? SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: controller.expensesAndIncomes!.length,
+                        (context, idx) {
+                          List<dynamic> item =
+                              controller.expensesAndIncomes![idx];
+                          return Card(
+                            child: ListTile(
+                              title: Text(
+                                item[0],
+                              ),
+                              subtitle: Text(
+                                timeago.format(DateTime.parse(item[3]),
+                                    locale: locale.toString()),
+                              ),
+                              trailing: Text(
+                                "${formater.currencySymbol}. ${formater.format(double.parse(item[2]))}",
+                                style: TextStyle(
+                                  color: item[1] == "Expense"
+                                      ? const Color(0xFFe74c3c)
+                                      : const Color(0xFF27ae60),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              )
+                    )
+                  : SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.cap_empty,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
             ],
           );
         }
         return const Center(child: CircularProgressIndicator());
       }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed("/create-expense-income");
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: GetBuilder<HomeController>(
+        builder: (_) => Visibility(
+          visible: controller.user != null,
+          child: FloatingActionButton(
+            onPressed: () {
+              Get.toNamed("/create-expense-income");
+            },
+            child: const Icon(Icons.add),
+          ),
+        ),
       ),
     );
   }

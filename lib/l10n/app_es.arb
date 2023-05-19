@@ -15,5 +15,7 @@
   "cap_amount":"Monto",
   "example_35":"Ej: 35",
   "addNewExpenseSlashIncome":"Agrega un nuevo ingreso/gasto",
-  "cap_balance":"Balance"
+  "cap_balance":"Balance",
+  "cap_empty":"Vacio, intenta agregar nuevos Ingresos/Gastos o cambia los filtros",
+  "cap_today":"Hoy"
 }

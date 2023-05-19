@@ -18,7 +18,7 @@ class HomeController extends GetxController {
   );
   GoogleSignInAccount? user;
 
-  String timeFilter = "all";
+  String timeFilter = "today";
   String typeFilter = "all";
   signIn() async {
     user = await googleSignIn.signIn();
@@ -66,7 +66,7 @@ class HomeController extends GetxController {
   }
 
   double getBalance() {
-    return expensesAndIncomes != null
+    return expensesAndIncomes != null && expensesAndIncomes!.isNotEmpty
         ? expensesAndIncomes!
             .map((e) => double.parse(e[2]))
             .reduce((prev, current) => prev + current)
@@ -113,8 +113,9 @@ class HomeController extends GetxController {
       expensesAndIncomes!
           .sort((a, b) => DateTime.parse(b[3]).compareTo(DateTime.parse(a[3])));
       expensesAndIncomesCopy = expensesAndIncomes;
+      // apply default filters
+      setFilters(time: timeFilter, type: typeFilter);
     } else {
-      print("empty");
       expensesAndIncomes = List.empty();
       expensesAndIncomesCopy = List.empty();
     }
@@ -144,42 +145,27 @@ class HomeController extends GetxController {
     update();
   }
 
-  void setTypeFilter(String value) {
-    typeFilter = value;
-    if (typeFilter == "all") {
-      expensesAndIncomes = expensesAndIncomesCopy;
-    } else {
-      expensesAndIncomes = expensesAndIncomesCopy!
-          .where((element) => element[1] == typeFilter)
-          .toList();
-    }
-    update();
-  }
-
   Future<void> signOut() async {
     spreadsheetId = "";
     await googleSignIn.disconnect();
   }
 
-  void setTimeFilter(String value) {
-    timeFilter = value;
+  Map<String, DateTime> opts = {
+    "this_week": DateTime.now().subtract(const Duration(days: 7)),
+    "this_month": DateTime.now().subtract(const Duration(days: 30)),
+    "today": DateTime.now().subtract(const Duration(days: 1)),
+  };
+  void setFilters({String? type, String? time}) {
+    timeFilter = time ?? timeFilter;
+    typeFilter = type ?? typeFilter;
+    expensesAndIncomes = expensesAndIncomesCopy!
+        .where((element) =>
+            (timeFilter != "all"
+                ? DateTime.parse(element[3]).isAfter(opts[timeFilter]!)
+                : true) &&
+            (typeFilter != "all" ? element[1] == typeFilter : true))
+        .toList();
 
-    switch (timeFilter) {
-      case "this_week":
-        expensesAndIncomes = expensesAndIncomesCopy!
-            .where((element) => DateTime.parse(element[3])
-                .isAfter(DateTime.now().subtract(const Duration(days: 7))))
-            .toList();
-        break;
-      case "this_month":
-        expensesAndIncomes = expensesAndIncomesCopy!
-            .where((element) => DateTime.parse(element[3])
-                .isAfter(DateTime.now().subtract(const Duration(days: 30))))
-            .toList();
-        break;
-      default:
-        expensesAndIncomes = expensesAndIncomesCopy;
-    }
     update();
   }
 }

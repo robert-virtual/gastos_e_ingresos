@@ -15,5 +15,7 @@
   "cap_amount":"Amount",
   "example_35":"Ex: 35",
   "addNewExpenseSlashIncome":"Add a new Income/Expense",
-  "cap_balance":"Balance"
+  "cap_balance":"Balance",
+  "cap_empty":"Empty, try adding new Income/Expenses or changing the filters",
+  "cap_today":"Today"
 }

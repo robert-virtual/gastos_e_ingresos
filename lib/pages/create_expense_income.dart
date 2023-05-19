@@ -65,7 +65,9 @@ class CreateExpenseIncomePage extends GetView<HomeController> {
             [
               titleCtrl.text,
               controller.cashflowType,
-              moneyCtrl.text,
+              controller.cashflowType == "Expense"
+                  ? int.parse(moneyCtrl.text) - (int.parse(moneyCtrl.text) * 2)
+                  : int.parse(moneyCtrl.text),
               DateTime.now().toIso8601String()
             ],
           );
